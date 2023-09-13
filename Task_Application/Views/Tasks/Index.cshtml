@@ -1,0 +1,82 @@
+﻿@using Task_Application.Data
+@model IEnumerable<Task_Application.Models.Task>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="display-4">Task Manegement Application</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsDone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Deadline)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Assigned)
+            </th>
+            <th>
+                FullName
+            </th>
+            <th>
+                JobTile
+            </th>
+            <th>
+                Email
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignedNavigation.EmployeeId)
+            </td>
+            @{
+                taskmanagementContext _context = new taskmanagementContext();
+                var employee = _context.Employees.FirstOrDefault(x => x.EmployeeId == item.Assigned);
+                    <td>
+                        @Html.DisplayFor(m=>employee.FullName);
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>employee.JobTitle);
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>employee.Email);
+                    </td>
+            }
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TaskId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.TaskId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

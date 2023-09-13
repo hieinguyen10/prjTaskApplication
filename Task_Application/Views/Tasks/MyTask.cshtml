@@ -1,0 +1,57 @@
+﻿@using Task_Application.Data
+@model IEnumerable<Task_Application.Models.Task>
+
+@{
+    ViewData["Title"] = "MyTask";
+}
+
+<div>
+        
+    @foreach(var item in Model){
+        <dl class="row">
+            @{
+                taskmanagementContext _context = new taskmanagementContext();
+                var emloyee = _context.Employees.FirstOrDefault(x => x.EmployeeId == item.Assigned);
+                    <h4>
+                        @emloyee.FullName
+                    </h4>
+            }
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TaskId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.TaskId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.TaskDescription)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.TaskDescription)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.IsDone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.IsDone)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Deadline)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Deadline)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Assigned)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(modelItem => item.Assigned)
+            </dd>
+        </dl>
+        <br>
+
+    }
+    
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
